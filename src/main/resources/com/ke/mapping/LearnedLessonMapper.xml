@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ke.mapper.LearnedLessonMapper" >
+
+<resultMap id="baseResultMap" type="com.ke.entity.LearnedLesson" >
+  		<id column="id" property="id" />
+ 	  	 <result column="user_id" property="userId" />
+ 	  	 <result column="lesson_id" property="lessonId" />
+ 	  	 <result column="chapter_id" property="chapterId" />
+ 	  	 <result column="created_time" property="createdTime" />
+ 	  	 <result column="last_modified_time" property="lastModifiedTime" />
+ 	  	 <result column="time_length" property="timeLength" />
+</resultMap>
+  
+  
+  
+<insert id="insert" parameterType="com.ke.entity.LearnedLesson" useGeneratedKeys="true" keyProperty="id" >
+  insert into `learned_lesson` (user_id,lesson_id,chapter_id,created_time,last_modified_time,time_length)
+  values (#{userId},#{lessonId},#{chapterId},#{createdTime},#{lastModifiedTime},#{timeLength})
+</insert>
+  
+<delete id="delete">
+    delete from `learned_lesson` where id = #{id}
+</delete>
+  
+  
+<update id="update" parameterType="com.ke.entity.LearnedLesson" >
+    update `learned_lesson`
+    <set >
+    	  id = #{id},
+    	  user_id = #{userId},
+    	  lesson_id = #{lessonId},
+    	  chapter_id = #{chapterId},
+    	  created_time = #{createdTime},
+    	  last_modified_time = #{lastModifiedTime},
+    	  	time_length = #{timeLength}
+    </set>
+    where id = #{id}
+ </update>
+  
+  
+<update id="merge" parameterType="com.ke.entity.LearnedLesson" >
+    update `learned_lesson`
+<set>
+ 	 <if test="id != null" >
+    	  id = #{id},
+     </if>
+ 	 <if test="userId != null" >
+    	  user_id = #{userId},
+     </if>
+ 	 <if test="lessonId != null" >
+    	  lesson_id = #{lessonId},
+     </if>
+ 	 <if test="chapterId != null" >
+    	  chapter_id = #{chapterId},
+     </if>
+ 	 <if test="createdTime != null" >
+    	  created_time = #{createdTime},
+     </if>
+ 	 <if test="lastModifiedTime != null" >
+    	  last_modified_time = #{lastModifiedTime},
+     </if>
+     <if test="timeLength != null" >
+     	  time_length = #{timeLength}
+     </if>
+    </set>
+    where id = #{id}
+  </update>
+ 
+<select id="findOne" resultMap="baseResultMap" parameterType="long">
+	select  
+		id,user_id,lesson_id,chapter_id,created_time,last_modified_time,time_length
+	from
+		`learned_lesson`
+	where id = #{id}	
+</select>
+  
+    
+</mapper>

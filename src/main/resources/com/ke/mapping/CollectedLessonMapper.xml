@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ke.mapper.CollectedLessonMapper" >
+
+<resultMap id="baseResultMap" type="com.ke.entity.CollectedLesson" >
+  		<id column="id" property="id" />
+ 	  	 <result column="user_id" property="userId" />
+ 	  	 <result column="lesson_id" property="lessonId" />
+ 	  	 <result column="created_time" property="createdTime" />
+</resultMap>
+  
+  
+  
+<insert id="insert" parameterType="com.ke.entity.CollectedLesson" useGeneratedKeys="true" keyProperty="id" >
+  insert into `collected_lesson` (user_id,lesson_id,created_time)
+  values (#{userId},#{lessonId},#{createdTime})
+</insert>
+  
+<delete id="delete">
+    delete from `collected_lesson` where id = #{id}
+</delete>
+  
+  
+<update id="update" parameterType="com.ke.entity.CollectedLesson" >
+    update `collected_lesson`
+    <set >
+    	  id = #{id},
+    	  user_id = #{userId},
+    	  lesson_id = #{lessonId},
+    	  	created_time = #{createdTime}
+    </set>
+    where id = #{id}
+ </update>
+  
+  
+<update id="merge" parameterType="com.ke.entity.CollectedLesson" >
+    update `collected_lesson`
+<set>
+ 	 <if test="id != null" >
+    	  id = #{id},
+     </if>
+ 	 <if test="userId != null" >
+    	  user_id = #{userId},
+     </if>
+ 	 <if test="lessonId != null" >
+    	  lesson_id = #{lessonId},
+     </if>
+     <if test="createdTime != null" >
+     	  created_time = #{createdTime}
+     </if>
+    </set>
+    where id = #{id}
+  </update>
+ 
+<select id="findOne" resultMap="baseResultMap" parameterType="long">
+	select  
+		id,user_id,lesson_id,created_time
+	from
+		`collected_lesson`
+	where id = #{id}	
+</select>
+  
+    
+</mapper>

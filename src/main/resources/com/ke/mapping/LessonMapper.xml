@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ke.mapper.LessonMapper" >
+
+<resultMap id="baseResultMap" type="com.ke.entity.Lesson" >
+  		<id column="id" property="id" />
+ 	  	 <result column="title" property="title" />
+ 	  	 <result column="user_id" property="userId" />
+ 	  	 <result column="category_id" property="categoryId" />
+  		 <result column="lesson_status" property="lessonStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+ 	  	 <result column="created_time" property="createdTime" />
+ 	  	 <result column="confirmed_time" property="confirmedTime" />
+ 	  	 <result column="image" property="image" />
+ 	  	 <result column="total_time_length" property="totalTimeLength" />
+ 	  	 <result column="rejected_reason" property="rejectedReason" />
+</resultMap>
+  
+  
+  
+<insert id="insert" parameterType="com.ke.entity.Lesson" useGeneratedKeys="true" keyProperty="id" >
+  insert into `lesson` (title,user_id,category_id,lesson_status,created_time,confirmed_time,image,total_time_length,rejected_reason)
+  values (#{title},#{userId},#{categoryId},#{lessonStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},#{createdTime},#{confirmedTime},#{image},#{totalTimeLength},#{rejectedReason})
+</insert>
+  
+<delete id="delete">
+    delete from `lesson` where id = #{id}
+</delete>
+  
+  
+<update id="update" parameterType="com.ke.entity.Lesson" >
+    update `lesson`
+    <set >
+    	  id = #{id},
+    	  title = #{title},
+    	  user_id = #{userId},
+    	  category_id = #{categoryId},
+			lesson_status = #{lessonStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+    	  created_time = #{createdTime},
+    	  confirmed_time = #{confirmedTime},
+    	  image = #{image},
+    	  total_time_length = #{totalTimeLength},
+    	  	rejected_reason = #{rejectedReason}
+    </set>
+    where id = #{id}
+ </update>
+  
+  
+<update id="merge" parameterType="com.ke.entity.Lesson" >
+    update `lesson`
+<set>
+ 	 <if test="id != null" >
+    	  id = #{id},
+     </if>
+ 	 <if test="title != null" >
+    	  title = #{title},
+     </if>
+ 	 <if test="userId != null" >
+    	  user_id = #{userId},
+     </if>
+ 	 <if test="categoryId != null" >
+    	  category_id = #{categoryId},
+     </if>
+ 	 <if test="lessonStatus != null" >
+    	  lesson_status = #{lessonStatus},
+     </if>
+ 	 <if test="createdTime != null" >
+    	  created_time = #{createdTime},
+     </if>
+ 	 <if test="confirmedTime != null" >
+    	  confirmed_time = #{confirmedTime},
+     </if>
+ 	 <if test="image != null" >
+    	  image = #{image},
+     </if>
+ 	 <if test="totalTimeLength != null" >
+    	  total_time_length = #{totalTimeLength},
+     </if>
+     <if test="rejectedReason != null" >
+     	  rejected_reason = #{rejectedReason}
+     </if>
+    </set>
+    where id = #{id}
+  </update>
+ 
+<select id="findOne" resultMap="baseResultMap" parameterType="long">
+	select  
+		id,title,user_id,category_id,lesson_status,created_time,confirmed_time,image,total_time_length,rejected_reason
+	from
+		`lesson`
+	where id = #{id}	
+</select>
+  
+<select id="findAll" resultMap="baseResultMap" parameterType="com.ke.model.query.LessonQueryModel" >
+    select 
+   	id,title,user_id,category_id,lesson_status,created_time,confirmed_time,image,total_time_length,rejected_reason
+    from `user`
+   	<where>
+   		<if test="createdTimeLT != null">
+			 and created_time &lt; #{createdTimeLT}
+		</if>
+   		<if test="createdTimeGTE != null">
+			 and created_time &gt;= #{createdTimeGTE}
+		</if>
+   		<if test="idEQ != null">
+			 and id = #{idEQ}
+		</if>
+	</where>
+	<choose>
+		<when test="orderByAndDirection != null">
+			order by ${orderByAndDirection}
+		</when>
+		<otherwise>
+			order by id desc
+		</otherwise> 
+	</choose>
+	<if test="offset != null">
+		limit #{offset}, #{pageSize}
+	</if>
+  </select>
+  
+  <select id="count" resultType="_long" parameterType="com.ke.model.query.LessonQueryModel" >
+    select 
+    count(*)
+    from `user`
+   	<where>
+   			<if test="createdTimeLT != null">
+			 and created_time &lt; #{createdTimeLT}
+		</if>
+   			<if test="createdTimeGTE != null">
+			 and created_time &gt;= #{createdTimeGTE}
+		</if>
+   			<if test="idEQ != null">
+			 and id = #{idEQ}
+		</if>
+	</where>
+  </select>
+    
+</mapper>

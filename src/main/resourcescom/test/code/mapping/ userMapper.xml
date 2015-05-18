@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.code.mapper.UserMapper" >
+
+
+<resultMap id="baseResultMap" type="com.test.code.model.User" >
+  		<id column="id" property="id" />
+ 	  	 <result column="name" property="name" />
+ 	  	 <result column="type" property="type" />
+ 	  	 <result column="user_type" property="userType" />
+ 	  	 <result column="password" property="password" />
+</resultMap>
+  
+  
+  
+<insert id="insert" parameterType="com.test.code.model.User" useGeneratedKeys="true" keyProperty="id" >
+  insert into `user` (name,type,user_type,password)
+  values (#{name},#{type},#{userType},#{password})
+</insert>
+  
+<delete id="delete">
+    delete from `user`  where id = #{id}
+</delete>
+  
+  
+<update id="update" parameterType="com.test.code.model.User" >
+    update `user`
+    <set >
+ 	 <if test="id != null" >
+    	  id = #{id},
+     </if>
+ 	 <if test="name != null" >
+    	  name = #{name},
+     </if>
+ 	 <if test="type != null" >
+    	  type = #{type},
+     </if>
+ 	 <if test="userType != null" >
+    	  user_type = #{userType},
+     </if>
+     <if test="password != null" >
+     	  password = #{password}
+     </if>
+    </set>
+    where id = #{id}
+ </update>
+  
+  
+<update id="merge" parameterType="com.test.code.model.User" >
+    update `user`
+<set >
+ 	 <if test="id != null" >
+    	  id = #{id},
+     </if>
+ 	 <if test="name != null" >
+    	  name = #{name},
+     </if>
+ 	 <if test="type != null" >
+    	  type = #{type},
+     </if>
+ 	 <if test="userType != null" >
+    	  user_type = #{userType},
+     </if>
+     <if test="password != null" >
+     	  password = #{password}
+     </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+<select id="page" resultMap="baseResultMap">
+		SELECT
+		id,name,type,user_type,password
+		FROM
+		`user`
+		<where>
+			<if test="queryParams.operator != null">
+				AND operator like #{queryParams.operator}
+			</if>
+		</where>
+		<if test="sorts != null and !sorts.isEmpty()">
+		ORDER BY
+			<foreach collection="sorts" item="sort" separator=",">
+				${sort.property} ${sort.direction}
+			</foreach>
+		</if>
+		<if test="sorts == null or sorts.isEmpty()">
+			ORDER BY	created_time DESC
+		</if>
+		
+	</select>
+
+    
+</mapper>

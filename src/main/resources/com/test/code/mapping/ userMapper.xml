@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.code.mapper.UserMapper" >
+
+<resultMap id="baseResultMap" type="com.test.code.model.User" >
+  		<id column="id" property="id" />
+ 	  	 <result column="name" property="name" />
+ 	  	 <result column="type" property="type" />
+ 	  	 <result column="user_type" property="userType" />
+ 	  	 <result column="password" property="password" />
+</resultMap>
+  
+  
+  
+<insert id="insert" parameterType="com.test.code.model.User" useGeneratedKeys="true" keyProperty="id" >
+  insert into `user` (name,type,user_type,password)
+  values (#{name},#{type},#{userType},#{password})
+</insert>
+  
+<delete id="delete">
+    delete from `user`  where id = #{id}
+</delete>
+  
+  
+<update id="update" parameterType="com.test.code.model.User" >
+    update `user`
+    <set >
+ 	 <if test="id != null" >
+    	  id = #{id},
+     </if>
+ 	 <if test="name != null" >
+    	  name = #{name},
+     </if>
+ 	 <if test="type != null" >
+    	  type = #{type},
+     </if>
+ 	 <if test="userType != null" >
+    	  user_type = #{userType},
+     </if>
+     <if test="password != null" >
+     	  password = #{password}
+     </if>
+    </set>
+    where id = #{id}
+ </update>
+  
+  
+<update id="merge" parameterType="com.test.code.model.User" >
+    update `user`
+<set>
+ 	 <if test="id != null" >
+    	  id = #{id},
+     </if>
+ 	 <if test="name != null" >
+    	  name = #{name},
+     </if>
+ 	 <if test="type != null" >
+    	  type = #{type},
+     </if>
+ 	 <if test="userType != null" >
+    	  user_type = #{userType},
+     </if>
+     <if test="password != null" >
+     	  password = #{password}
+     </if>
+    </set>
+    where id = #{id}
+  </update>
+ 
+<select id="findOne"   resultMap="BaseResultMap" parameterType="long">
+	select  
+		id,name,type,user_type,password
+	from
+		`user`
+	where id = #{id}	
+</select>
+  
+<select id="findAll" resultMap="BaseResultMap" parameterType="com.test.code.model.UserQueryModel" >
+    select 
+   	id,name,type,user_type,password
+    from `user`
+   	<where>
+   		<if test="registerTimeGTE != null">
+			 and register_time &gt;= #{registerTimeGTE}
+		</if>
+   		<if test="registerTimeLT != null">
+			 and register_time &lt; #{registerTimeLT}
+		</if>
+   		<if test="nicknameLK != null">
+			<bind name="nicknameLK" value="'%' + nicknameLK + '%'"/> and nickname like #{nicknameLK}
+		</if>
+   		<if test="idEQ != null">
+			 and id = #{idEQ}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		order by ${orderBy} ${direction}
+	</if>
+	<if test="orderBy == null">
+		order by id desc
+	</if>
+	<if test="offset != null">
+		limit #{offset}, #{pageSize}
+	</if>
+  </select>
+  
+  <select id="count" resultType="_long" parameterType="com.test.code.model.UserQueryModel" >
+    select 
+    count(*)
+    from `user`
+   	<where>
+   			<if test="registerTimeGTE != null">
+			 and register_time &gt;= #{registerTimeGTE}
+		</if>
+   			<if test="registerTimeLT != null">
+			 and register_time &lt; #{registerTimeLT}
+		</if>
+   			<if test="nicknameLK != null">
+			<bind name="nicknameLK" value="'%' + nicknameLK + '%'"/> and nickname like #{nicknameLK}
+		</if>
+   			<if test="idEQ != null">
+			 and id = #{idEQ}
+		</if>
+	</where>
+  </select>
+    
+</mapper>
