@@ -4,6 +4,7 @@ public class MybatisMappingMeta {
 	private String column;
 	private String property;
 	private String enumHander;
+	private String javaType;
 
 	public String getEnumHander() {
 		return enumHander;
@@ -34,6 +35,16 @@ public class MybatisMappingMeta {
 
 	public static MybatisMappingMeta newMybatisMappingMeta() {
 		return new MybatisMappingMeta();
+	}
+	
+
+	public String getJavaType() {
+		return javaType;
+	}
+
+	public MybatisMappingMeta setJavaType(String javaType) {
+		this.javaType = javaType;
+		return this;
 	}
 
 	@Override

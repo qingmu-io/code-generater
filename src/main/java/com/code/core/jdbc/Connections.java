@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import com.code.core.config.Config;
 
 public class Connections {
-	static Config config = new Config();
-	public static  Connection getConnection() {
+	public static  Connection getConnection(Config config) {
 		try {
-			return DriverManager.getConnection(config.getStringValue("url"), config.getStringValue("username"), config.getStringValue("password"));
+			return DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

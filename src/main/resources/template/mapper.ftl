@@ -1,5 +1,7 @@
-package ${basePackage}.mapper;
+package ${basePackage};
 
+
+import org.apache.ibatis.annotations.Param;
 
 import ${mmm.modelName};
 <#if mmm.simpleQuery != ''>
@@ -12,7 +14,7 @@ public interface ${mmm.simpleName}Mapper {
 
 	int update(${mmm.simpleName} ${mmm.simpleName?uncap_first});
 
-	int merge(${mmm.simpleName} ${mmm.simpleName?uncap_first});
+	int merge(@Param("${mmm.simpleName?uncap_first}") ${mmm.simpleName} ${mmm.simpleName?uncap_first}, @Param("fields")String... fields);
 
 	int delete(Long id);
 

@@ -6,9 +6,10 @@ import java.util.List;
 public class MysqlTableMeta {
 
 	private String table;
+	private Class<?> klass;
 
 	private List<MysqlColumnMeta> mysqlColumnMetas = new ArrayList<MysqlColumnMeta>();
-
+	private List<String> uniques = new ArrayList<String>();
 	public String getTable() {
 		return table;
 	}
@@ -27,13 +28,32 @@ public class MysqlTableMeta {
 		return this;
 	}
 
+	public Class<?> getKlass() {
+		return klass;
+	}
+
+	public MysqlTableMeta setKlass(Class<?> klass) {
+		this.klass = klass;
+		return this;
+	}
+
 	public static MysqlTableMeta newMysqlTableMeta() {
 		return new MysqlTableMeta();
 	}
 
 	@Override
 	public String toString() {
-		return  mysqlColumnMetas.toString().replace("]", "").replace("[", "");
+		return mysqlColumnMetas.toString().replace("]", "").replace("[", "");
 	}
+
+	public List<String> getUniques() {
+		return uniques;
+	}
+
+	public void setUniques(List<String> uniques) {
+		this.uniques = uniques;
+	}
+	
+	
 
 }

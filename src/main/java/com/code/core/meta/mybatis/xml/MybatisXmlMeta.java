@@ -10,7 +10,9 @@ public class MybatisXmlMeta {
 	private String mapperName;
 	private String model;
 	private String table;
+	private String simpleName;
 	private String query;
+	private String version = "";
 	private Map<String, String> querys = new HashMap<String,String>();
 	
 	private List<MybatisMappingMeta> mappingMetas = new ArrayList<MybatisMappingMeta>();
@@ -62,11 +64,26 @@ public class MybatisXmlMeta {
 	public void setQuerys(Map<String, String> querys) {
 		this.querys = querys;
 	}
+	
+	public String getSimpleName() {
+		return simpleName;
+	}
+	public MybatisXmlMeta setSimpleName(String simpleName) {
+		this.simpleName = simpleName;
+		return this;
+	}
 	@Override
 	public String toString() {
 		return "MybatisXmlMeta [mapperName=" + mapperName 
 				+ ", mappingMetas=" + mappingMetas + "]";
 	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
 	
 	
 	

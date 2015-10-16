@@ -53,9 +53,4 @@ public class UnderlineToCameUtils {
 	    }
 	    return sb.toString();
 	}
-	public static void main(String[] args) {
-		String camelToUnderline = underlineToCamel2(camelToUnderline("userName"));
-		System.out.println(camelToUnderline);
-	}
-	
 }

@@ -6,6 +6,7 @@ import java.io.StringWriter;
 import java.util.Map;
 
 import com.code.core.config.Config;
+import com.code.core.file.MyBatisXmlFileUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -15,10 +16,11 @@ public enum FM {
 	FM;
 	Configuration configuration = new Configuration(new Version("2.3.0"));
 	Config config = new Config();
+	
 	FM(){
 		configuration.setDefaultEncoding("UTF-8");
 		try {
-			configuration.setDirectoryForTemplateLoading(new File(config.getStringValue("fmTemp")));
+			configuration.setDirectoryForTemplateLoading(new File(MyBatisXmlFileUtils.class.getClassLoader().getResource("template").getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -30,7 +32,7 @@ public enum FM {
 			Template template = this.configuration.getTemplate(templateName+".ftl");
 			template.process(dataModel, out);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return out.toString();
 		

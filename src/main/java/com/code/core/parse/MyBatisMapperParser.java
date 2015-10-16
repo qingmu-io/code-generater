@@ -2,13 +2,22 @@ package com.code.core.parse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Table;
 
+import com.code.core.config.Config;
 import com.code.core.meta.mybatis.mapper.MybatisMapperMeta;
 
 public class MyBatisMapperParser extends AbstractParser {
 	
+
+	public MyBatisMapperParser(Config config, Set<Class<?>> klasses,
+			Map<String, Class<?>> querys) {
+		super(config, klasses, querys);
+	}
+
 	public List<MybatisMapperMeta> mybatisMapperMetas(){
 		 List<MybatisMapperMeta> result = new ArrayList<MybatisMapperMeta>();
 		klasses.stream().forEach((klass)->{
