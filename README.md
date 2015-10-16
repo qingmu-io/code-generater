@@ -58,4 +58,134 @@
                 //配置log的存储路径 此log很重要。将会保存每次数据库和实体的检测结果以及修复的sql建议
                 Generater.run(config,new File("D:/LOGS3.LOG"));
             }
-### 生成的结果            
+### 生成的结果   
+        public interface AdminMapper {
+        
+        int insert(Admin admin);
+        
+        int update(Admin admin);
+        
+        int merge(@Param("admin") Admin admin, @Param("fields")String... fields);
+        
+        int delete(Long id);
+        
+        Admin findOne(Long id);
+        
+        List<Admin> findAll(AdminQueryModel adminQueryModel);
+        
+        long count(AdminQueryModel adminQueryModel);
+        }
+             
+        public class AdminQueryModel  {
+        private static final long serialVersionUID = 1L;
+        private String nicknameLK;
+        private String phoneEQ;
+        
+        public String getNicknameLK() {
+            return nicknameLK;
+        }
+        
+        public void setNicknameLK(String nicknameLK) {
+            this.nicknameLK = nicknameLK;
+        }
+        
+        public String getPhoneEQ() {
+            return phoneEQ;
+        }
+        
+        public void setPhoneEQ(String phoneEQ) {
+            this.phoneEQ = phoneEQ;
+        }
+        
+        }
+             
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        <mapper namespace="test.com.mapper.AdminMapper" >
+        
+        <resultMap id="baseResultMap" type="test.com.entity.Admin">
+            <id column="id" property="id" />
+            <result column="user_id" property="userId" />
+            <result column="role_names" property="roleNames" />
+            <result column="age" property="age" />
+        </resultMap>
+        
+        <insert id="insert" parameterType="test.com.entity.Admin" useGeneratedKeys="true" keyProperty="id">
+          insert into `admin` (user_id,role_names,age)
+          values (#{userId},#{roleNames},#{age})
+        </insert>
+        
+        <delete id="delete">
+            delete from `admin` where id = #{id}
+        </delete>
+        
+        <update id="update" parameterType="test.com.entity.Admin">
+            update `admin`
+            <set>
+                user_id = #{userId},
+                role_names = #{roleNames},
+                age = #{age},
+            </set>
+            where id = #{id}
+        </update>
+        
+        <update id="merge">
+            update `admin`
+                <set>
+                    <foreach collection="fields" item="field">
+                    <choose>
+                        <when test="field == 'userId'">user_id = #{admin.userId},</when>
+                        <when test="field == 'roleNames'">role_names = #{admin.roleNames},</when>
+                        <when test="field == 'age'">age = #{admin.age},</when>
+                    </choose>
+                    </foreach>
+                </set>
+            where id = #{admin.id}
+        </update>
+        
+        <select id="findOne" resultMap="baseResultMap" parameterType="long">
+            select
+            id,user_id,role_names,age
+            from `admin`
+            where id = #{id}
+        </select>
+        
+        <select id="findAll" resultMap="baseResultMap" parameterType="test.com.model.query.AdminQueryModel">
+            select
+            id,user_id,role_names,age
+            from `admin`
+            <where>
+                <if test="nicknameLK != null">
+                    <bind name="nicknameLK" value="'%' + nicknameLK + '%'"/> and nickname like #{nicknameLK}
+                </if>
+                <if test="phoneEQ != null">
+                     and phone = #{phoneEQ}
+                </if>
+            </where>
+            <choose>
+                <when test="orderByAndDirection != null">
+                    order by ${orderByAndDirection}
+                </when>
+                <otherwise>
+                    order by id desc
+                </otherwise>
+            </choose>
+            <if test="offset != null">
+                limit #{offset}, #{pageSize}
+            </if>
+        </select>
+        
+        <select id="count" resultType="_long" parameterType="test.com.model.query.AdminQueryModel">
+            select count(*) from `admin`
+            <where>
+                <if test="nicknameLK != null">
+                    <bind name="nicknameLK" value="'%' + nicknameLK + '%'"/> and nickname like #{nicknameLK}
+                </if>
+                <if test="phoneEQ != null">
+                     and phone = #{phoneEQ}
+                </if>
+            </where>
+        </select>
+        
+        </mapper>         
+        
