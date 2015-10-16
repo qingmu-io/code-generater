@@ -104,9 +104,11 @@
         
         }
         
- #### Mybatis XML        
-
+#### Mybatis XML        
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
         <mapper namespace="test.com.mapper.AdminMapper" >
+        
         <resultMap id="baseResultMap" type="test.com.entity.Admin">
             <id column="id" property="id" />
             <result column="user_id" property="userId" />
