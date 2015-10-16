@@ -58,7 +58,11 @@
                 //配置log的存储路径 此log很重要。将会保存每次数据库和实体的检测结果以及修复的sql建议
                 Generater.run(config,new File("D:/LOGS3.LOG"));
             }
+            
 ### 生成的结果   
+
+#### 实体类Mapper
+
         public interface AdminMapper {
         
         int insert(Admin admin);
@@ -75,7 +79,8 @@
         
         long count(AdminQueryModel adminQueryModel);
         }
-             
+        
+#### AdminQueryModel            
         public class AdminQueryModel  {
         private static final long serialVersionUID = 1L;
         private String nicknameLK;
@@ -98,7 +103,8 @@
         }
         
         }
-             
+        
+ #### Mybatis XML        
         <?xml version="1.0" encoding="UTF-8" ?>
         <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
         <mapper namespace="test.com.mapper.AdminMapper" >
