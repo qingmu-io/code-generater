@@ -10,7 +10,7 @@
 6. 自动驼峰装换
 
 ### 实体类demo
-
+```java
 	//JPA注解 需要解析的类必须加此注解
     @Entity
     //JPA注解 name表示数据表的名称 uniqueConstraints表示需要进行唯一约束的列,可自动追加到数据库
@@ -28,8 +28,9 @@
     
         //getter setter
     }
+```
 ### 查询对象DEMO
-
+```java
     //注意查询对象是由于Admin+QueryModel来进行命名
     public class AdminQueryModel  {
         private static final long serialVersionUID = -8493398486786898485L;
@@ -40,8 +41,10 @@
     
 	    //getter setter
     }
-
+```
 ### 快速使用
+
+```java
 	public static void main(String[] S) {
 		//全局配置对象
 	    Config config = new Config();
@@ -62,11 +65,11 @@
 	    //配置log的存储路径 此log很重要。将会保存每次数据库和实体的检测结果以及修复的sql建议
 	    Generater.run(config,new File("D:/LOGS3.LOG"));
 	}
-            
+```
 ### 生成的结果   
 
 #### 实体类Mapper
-
+```java
 	public interface AdminMapper {
 	    
 		int insert(Admin admin);
@@ -83,9 +86,9 @@
 		    
 		long count(AdminQueryModel adminQueryModel);
 	}
-        
+```        
 #### AdminQueryModel
-
+```java
     public class AdminQueryModel  {
 	    private static final long serialVersionUID = 1L;
 	    private String nicknameLK;
@@ -108,9 +111,9 @@
 	    }
     
     }
-        
+```        
 #### Mybatis XML
-
+```xml
 	<?xml version="1.0" encoding="UTF-8" ?>
 	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 	<mapper namespace="test.com.mapper.AdminMapper" >
@@ -200,4 +203,4 @@
 	</select>
 	    
 	</mapper>         
-	    
+```	    
