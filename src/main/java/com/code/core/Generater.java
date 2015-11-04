@@ -51,30 +51,24 @@ public class Generater {
 					utils.saveXml(model.substring(model.lastIndexOf(".") + 1)
 							+ "Mapper.xml", runTemplate);
 				});
-		System.out.println("完成 xml写入");
+		Logger.info("完成 xml写入");
 
 		mybatisMapperMetas.parallelStream().forEach((mmm) -> {
 			String runTemplate = getTepl(config, mmm);
 			utils.saveMapper(mmm.getSimpleName() + "Mapper.java", runTemplate);
 		});
-		System.out.println("完成 mapper写入");
+		Logger.info("完成 mapper写入");
 
-		
-		parseMysqlScriptMeta.parallelStream().forEach((mtm) -> {
-			runner.execute(mtm, config);
-		});
-		System.out.println("同步数据库表完成");
-		parseMysqlScriptMeta.forEach(mtm -> {
-			runner.checkEntity2DB(mtm.getTable(), mtm.getKlass(), config);
-		});
-		
-		parseMysqlScriptMeta.forEach(mtm -> {
-			runner.checkUnique(mtm.getTable(), mtm.getUniques(), config);
-		});
-		System.out.println("检查完成");
-		
+
+		parseMysqlScriptMeta.parallelStream().forEach((mtm) -> runner.execute(mtm, config));
+		Logger.info("同步数据库表完成");
+		parseMysqlScriptMeta.forEach(mtm -> runner.checkEntity2DB(mtm.getTable(), mtm.getKlass(), config));
+
+		parseMysqlScriptMeta.forEach(mtm -> runner.checkUnique(mtm.getTable(), mtm.getUniques(), config));
+		Logger.info("检查完成");
+
 		Logger.flush();
-		
+
 	}
 
 	private static String getMxmString(MybatisXmlMeta mxm) {

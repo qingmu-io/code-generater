@@ -22,7 +22,7 @@ public class KlassHelper {
 	}
 	
     public static Set<Class<?>> getClasses(String pack){ 
-		Set<Class<?>> classes = new LinkedHashSet<Class<?>>(); 
+		Set<Class<?>> classes = new LinkedHashSet<>();
 		ImmutableSet<ClassInfo> topLevelClassesRecursive = classpath.getTopLevelClassesRecursive(pack);
 		topLevelClassesRecursive
 		.forEach(k->{
@@ -38,7 +38,7 @@ public class KlassHelper {
 
 	public static Map<String, Class<?>> getQuerysClasses(
 			String queryModelPackage) {
-			Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
+			Map<String, Class<?>> classes = new HashMap<>();
 			classpath.getTopLevelClassesRecursive(queryModelPackage)
 			.forEach(k->{
 				try {

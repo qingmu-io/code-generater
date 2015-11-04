@@ -8,8 +8,8 @@ public class MysqlTableMeta {
 	private String table;
 	private Class<?> klass;
 
-	private List<MysqlColumnMeta> mysqlColumnMetas = new ArrayList<MysqlColumnMeta>();
-	private List<String> uniques = new ArrayList<String>();
+	private List<MysqlColumnMeta> mysqlColumnMetas = new ArrayList<>();
+	private List<String> uniques = new ArrayList<>();
 	public String getTable() {
 		return table;
 	}
