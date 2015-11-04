@@ -91,14 +91,14 @@ public class SQLRunner {
 			uniques.forEach((un)->{
 				try {
 					if(!un.contains(",")){
-						String sql = "ALTER TABLE "+table+" ADD   UNIQUE unique_"+ UnderlineToCameUtils.camelToUnderline(un)+"("+UnderlineToCameUtils.camelToUnderline(un)+");";
+						String sql = String.format("ALTER TABLE %s ADD   UNIQUE unique_%s(%s);", table, UnderlineToCameUtils.camelToUnderline(un), UnderlineToCameUtils.camelToUnderline(un));
 						createStatement.executeUpdate(sql);
 						Logger.info(sql);
 						System.out.println(sql);
 					}else {
 						String uniqueName = Arrays.asList(un.split(",")).stream().reduce((p,n)->UnderlineToCameUtils.camelToUnderline(p) +"_" + UnderlineToCameUtils.camelToUnderline(n)).get();
 						String unique = Arrays.asList(un.split(",")).stream().reduce((p,n)->UnderlineToCameUtils.camelToUnderline(p) +"," + UnderlineToCameUtils.camelToUnderline(n)).get();
-						String sql = "ALTER TABLE "+table+" ADD   UNIQUE unique_"+uniqueName+"("+unique+");";
+						String sql = String.format("ALTER TABLE %s ADD   UNIQUE unique_%s(%s);", table, uniqueName, unique);
 						createStatement.executeUpdate(sql);
 						Logger.info(sql);
 						System.out.println(sql);
@@ -106,7 +106,6 @@ public class SQLRunner {
 				} catch (Exception e) {
 					String message = e.getMessage();
 					if(!message.startsWith("Duplicate"))
-//					System.out.println(message);
 					throw new RuntimeException(e);
 				}
 			});

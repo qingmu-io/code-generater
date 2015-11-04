@@ -41,10 +41,8 @@ public class MybatisXmlParser extends AbstractParser {
 						Class<?> queryKlass = querys.get(simpleName);
 
 						if (queryKlass != null) {
-							meta.setQuery(config.getQueryModelPackage() + "." + simpleName);
-							Arrays.asList(queryKlass.getDeclaredFields()).stream().filter(this::filterSerialVersionUID).forEach((field) -> {
-								parseQueryModel(meta, field);
-							});
+							meta.setQuery(String.format("%s.%s", config.getQueryModelPackage(), simpleName));
+							Arrays.asList(queryKlass.getDeclaredFields()).stream().filter(this::filterSerialVersionUID).forEach((field) -> parseQueryModel(meta, field));
 						}
 						result.add(meta);
 					} else {
@@ -68,7 +66,7 @@ public class MybatisXmlParser extends AbstractParser {
 	 */
 	private void parseQueryModel(MybatisXmlMeta meta, Field field) {
 		String name = field.getName();
-		String value = null;
+		String value;
 		if (name.endsWith("NEQ")) {
 			String camelToUnderline = UnderlineToCameUtils.camelToUnderline(name.replace("NEQ", ""));
 			if (field.getType().isEnum())

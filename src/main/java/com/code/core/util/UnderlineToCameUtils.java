@@ -1,13 +1,15 @@
 package com.code.core.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UnderlineToCameUtils {
 	public static final char UNDERLINE='_';
 	public static String camelToUnderline(String param){
-	    if (param==null||"".equals(param.trim())){
-	        return "";
+	    if (StringUtils.isBlank(param)){
+	        return StringUtils.EMPTY;
 	    }
 	    int len=param.length();
 	    StringBuilder sb=new StringBuilder(len);
@@ -41,8 +43,8 @@ public class UnderlineToCameUtils {
 	    return sb.toString();
 	}
 	public static String underlineToCamel2(String param){
-	    if (param==null||"".equals(param.trim())){
-	        return "";
+	    if (StringUtils.isBlank(param)){
+	        return StringUtils.EMPTY;
 	    }
 	    StringBuilder sb=new StringBuilder(param);
 	    Matcher mc= Pattern.compile("_").matcher(param);

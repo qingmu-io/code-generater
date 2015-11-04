@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.code.core.config.Config;
 import com.code.core.meta.mybatis.mapper.MybatisMapperMeta;
+import org.apache.commons.lang3.StringUtils;
 
 public class MyBatisMapperParser extends AbstractParser {
 	
@@ -19,7 +20,7 @@ public class MyBatisMapperParser extends AbstractParser {
 	}
 
 	public List<MybatisMapperMeta> mybatisMapperMetas(){
-		 List<MybatisMapperMeta> result = new ArrayList<MybatisMapperMeta>();
+		 List<MybatisMapperMeta> result = new ArrayList<>();
 		klasses.stream().forEach((klass)->{
 		if(klass.getDeclaredAnnotation(Table.class) != null){
 			String name = klass.getName();
@@ -32,8 +33,8 @@ public class MyBatisMapperParser extends AbstractParser {
 				meta.setQueryModel(name2);
 				meta.setSimpleQuery(simpleName2);
 			}else{
-				meta.setQueryModel("");
-				meta.setSimpleQuery("");
+				meta.setQueryModel(StringUtils.EMPTY);
+				meta.setSimpleQuery(StringUtils.EMPTY);
 			}
 			meta.setModelName(name);
 			meta.setSimpleName(simpleName);
